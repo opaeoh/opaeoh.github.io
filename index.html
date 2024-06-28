@@ -6,7 +6,7 @@
     <title>Ash / home</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        body { margin: 0; overflow: hidden; background-color: black; }
+        body { margin: 0; overflow-x: hidden; background-color: black; color: white; }
         .center-container {
             position: absolute;
             top: 50%;
@@ -20,7 +20,9 @@
             background-color: rgba(0, 0, 0, 0.5);
             padding: 5px;
             border-radius: 10px;
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .button {
             width: 40px;
@@ -28,6 +30,39 @@
             cursor: pointer;
             margin: 5px;
             border-radius: 5px;
+        }
+        .blog-container {
+            margin-top: 20px;
+            padding: 20px;
+            text-align: left;
+            width: 100%;
+        }
+        .blog-post {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .blog-title {
+            font-size: 24px;
+            margin: 0;
+        }
+        .blog-content {
+            display: none;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .scroll-to-blog {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            margin: 5px;
         }
     </style>
 </head>
@@ -37,12 +72,16 @@
         <div id="text-container"></div>
         <div class="button-container">
             <a href="https://github.com/opaeoh" target="_blank">
-                <img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" alt="Button 1" class="button">
+                <img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" alt="GitHub" class="button">
             </a>
             <a href="https://x.com/opaeoh" target="_blank">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQatdy5z0N7MCb3l46oxDIrSq96-3FHCA8UOQ&s" alt="Button 2" class="button">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQatdy5z0N7MCb3l46oxDIrSq96-3FHCA8UOQ&s" alt="Twitter" class="button">
             </a>
+            <a href="#blog-section" class="scroll-to-blog">Go to Blog</a>
         </div>
+    </div>
+    <div class="blog-container" id="blog-section">
+        <!-- Blog posts will be injected here by JavaScript -->
     </div>
 
     <script>
@@ -81,7 +120,28 @@
             .style("padding", "20px")
             .style("border-radius", "10px")
             .html("<h1 style='font-size: 48px; color: white; margin: 0;'>ASH</h1>" +
-                  "<p style='font-size: 24px; color: white; margin: 10px 0 0;'>Coder / student . Working on <b><i>nograd</i></b></p>");
+                  "<p style='font-size: 24px; color: white; margin: 10px 0 0;'>Coder / AI-ML Dude . Working on <b><i>nograd</i></b></p>");
+
+        // Blog posts data
+        const blogPosts = [
+            {
+                title: "Who ?",
+                content: "Am I"
+            },
+            {
+                title: "This is a test",
+                content: "Lorem Ipsum"
+            }
+        ];
+
+        // Add blog posts to the container
+        const blogContainer = d3.select("#blog-section");
+
+        blogPosts.forEach(post => {
+            const postDiv = blogContainer.append("div").attr("class", "blog-post");
+            postDiv.append("h2").attr("class", "blog-title").text(post.title);
+            postDiv.append("p").attr("class", "blog-content").text(post.content);
+        });
 
         // Animate stars
         function animateStars() {
@@ -112,6 +172,15 @@
         }
 
         animateStars();
+
+        // Toggle blog content on title click
+        document.querySelectorAll('.blog-title').forEach(title => {
+            title.addEventListener('click', () => {
+                const content = title.nextElementSibling;
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
     </script>
 </body>
 </html>
