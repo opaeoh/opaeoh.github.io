@@ -4,207 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ash / home</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        body { margin: 0; overflow-x: hidden; background-color: black; color: white; }
-        .center-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        .button-container {
-            margin-top: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px;
-            border-radius: 10px;
+        .content {
+            display: flex;
+            flex: 1;
+        }
+        .left-side {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .right-side {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
-        .button {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            margin: 5px;
-            border-radius: 5px;
+        #ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            font-size: 6px;
+            line-height: 6px;
+            background: linear-gradient(-45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientMove 10s ease infinite;
         }
-        .blog-container {
-            margin-top: 20px;
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        a::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            width: 0;
+            height: 100%;
+            color: transparent;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: linkAnimation 3s infinite linear;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        @keyframes linkAnimation {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+        .blog-section {
             padding: 20px;
-            text-align: left;
-            width: 100%;
+            border-top: 1px solid #333;
         }
         .blog-post {
-            background-color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
             padding: 10px;
-            border-radius: 10px;
-            margin: 10px 0;
-            cursor: pointer;
-        }
-        .blog-title {
-            font-size: 24px;
-            margin: 0;
-        }
-        .blog-content {
-            display: none;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .scroll-to-blog {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
             border-radius: 5px;
-            cursor: pointer;
-            color: white;
-            font-size: 18px;
-            text-decoration: none;
-            margin: 5px;
+        }
+        .blog-post h3 {
+            margin-top: 0;
         }
     </style>
 </head>
 <body>
-    <svg id="space"></svg>
-    <div class="center-container">
-        <div id="text-container"></div>
-        <div class="button-container">
-            <a href="https://github.com/opaeoh" target="_blank">
-                <img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" alt="GitHub" class="button">
-            </a>
-            <a href="https://x.com/opaeoh" target="_blank">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQatdy5z0N7MCb3l46oxDIrSq96-3FHCA8UOQ&s" alt="Twitter" class="button">
-            </a>
-            <a href="#blog-section" class="scroll-to-blog">Go to Blog</a>
+    <div class="content">
+        <div class="left-side">
+            <h1>Abt.me</h1>
+            <ul>
+                <li>My name is Ash and I run <a href="https://github.com/idaeyus" data-text="Idaeyus">Idaeyus</a></li>
+                <li>I love writing code and post on <a href="https://x.com/opaeoh" data-text="@opaeoh">@opaeoh</a></li>
+            </ul>
+            <h2>Programming Journey</h2>
+            <ol>
+                <li>Started my journey by making simple maps for CounterStrike using the <a href="https://developer.valvesoftware.com/wiki/SDK_Installation" data-text="Source SDK">Source SDK</a></li>
+                <li>Then learnt javascript from <a href="https://www.khanacademy.org/computing/computer-programming/programming" data-text="Khan Academy">Khan Academy</a></li>
+                <li>Learnt java and made nothing out of it</li>
+                <li>Learnt python and still build apps using it</li>
+            </ol>
+            <h2>Currently Working On</h2>
+            <ol>
+                <li>A simple programming language</li>
+                <li>An AI transpiler</li>
+                <li>A chess server</li>
+                <li>AI component builder</li>
+                <li>Fine-tuning AI models</li>
+            </ol>
+        </div>
+        <div class="right-side">
+            <div id="ascii-art"></div>
         </div>
     </div>
-    <div class="blog-container" id="blog-section">
-        
+    <div class="blog-section">
+        <h2>Blog</h2>
+        <div id="blog-posts"></div>
     </div>
 
     <script>
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const numStars = 500;
+        const asciiArt = `
+                                   ▄▄
+                                ▄█████▄
+                               █████████▄
+                             ▄██████████████▄
+                           ▄█████████████████▄
+                         ▄███████████████████▀
+                        ████████████████████▀
+                       ████████████████████
+                      █████████████████████▄
+                     █████████████████████████▄▄
+                    ██████████████████████████████▄
+                  ██████████████████████████████████▄
+                ▄█████████████████████████████████████▄
+              ▄█████████████████████████████████████████▄
+             ███████████████████████████████████████████████▄
+           ▄████████████████████████████████████████████████████▄
+         ▄████████████████████████████████████████████████████████▄
+        ██████████████████████████████████████████████████████████████
+      ▄████████████████████████████████████████████████████████████████▄
+    ▄██████████████████████████████████████████████████████████████████████▄
+  ▄█████████████████████████████████████████████████████████████████████████████▄
+`;
 
-        const svg = d3.select("#space")
-            .attr("width", width)
-            .attr("height", height);
+        document.getElementById('ascii-art').textContent = asciiArt;
 
-       
-        const stars = d3.range(numStars).map(() => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            z: Math.random() * width,
-            r: Math.random() * 2 + 1
-        }));
-
-        const starGroup = svg.append("g");
-
-        starGroup.selectAll("circle")
-            .data(stars)
-            .enter()
-            .append("circle")
-            .attr("cy", d => d.y)
-            .attr("r", d => d.r)
-            .attr("fill", "white");
-
-       
-        const textContainer = d3.select("#text-container");
-
-        textContainer.append("div")
-            .style("background-color", "rgba(0, 0, 0, 0.5)")
-            .style("padding", "20px")
-            .style("border-radius", "10px")
-            .html("<h1 style='font-size: 48px; color: white; margin: 0;'>ASH</h1>" +
-                  "<p style='font-size: 24px; color: white; margin: 10px 0 0;'>Coder / student . <3 AI ML :: RL DL. Coding @ <b><i><a href='https://idaeyus.github.io' style='color: white; text-decoration: none;'>Idaeyus</a></i></b></p>");
-
-        
         const blogPosts = [
             {
-                title: "Test1",
-                content: "This is the content of the first blog post. It is a simple example to demonstrate how the blog feature works.",
-                id: "blog1"
+                id: 1,
+                title: "My First Blog Post",
+                content: "Welcome to my blog! This is where I'll share my thoughts on programming, AI, and tech."
             },
             {
-                title: "Lorem",
-                content: "Here is some more content for the second blog post. You can add as many posts as you want!",
-                id: "blog2"
+                id: 2,
+                title: "Learning AI",
+                content: "Today, I started diving deeper into machine learning algorithms. It's fascinating how they can be applied to solve real-world problems."
             }
         ];
 
-  
-        const blogContainer = d3.select("#blog-section");
+        function renderBlogPosts() {
+            const blogPostsContainer = document.getElementById('blog-posts');
+            blogPostsContainer.innerHTML = '';
 
-        blogPosts.forEach(post => {
-            const postDiv = blogContainer.append("div")
-                .attr("class", "blog-post")
-                .attr("id", post.id);
+            const hash = window.location.hash.substring(1);
+            const selectedPostId = hash.startsWith('blog-') ? parseInt(hash.split('-')[1]) : null;
 
-            postDiv.append("h2").attr("class", "blog-title").text(post.title);
-            postDiv.append("p").attr("class", "blog-content").text(post.content);
-        });
-
-        
-        function animateStars() {
-            starGroup.selectAll("circle")
-                .attr("cx", function(d) {
-                    d.z -= 5;
-                    if (d.z <= 0) {
-                        d.z = width;
-                        d.x = Math.random() * width;
-                        d.y = Math.random() * height;
-                    }
-                    const scale = width / (width + d.z);
-                    return (d.x - width / 2) * scale + width / 2;
-                })
-                .attr("cy", function(d) {
-                    const scale = width / (width + d.z);
-                    return (d.y - height / 2) * scale + height / 2;
-                })
-                .attr("r", function(d) {
-                    const scale = width / (width + d.z);
-                    return Math.max(0.1, d.r * scale);
-                })
-                .attr("opacity", function(d) {
-                    return Math.min(1, Math.max(0.1, 1 - d.z / width));
-                });
-            
-            requestAnimationFrame(animateStars);
-        }
-
-        animateStars();
-
-        
-        function expandBlogContent() {
-            const hash = window.location.hash;
-            if (hash) {
-                const target = document.querySelector(hash);
-                if (target) {
-                    const content = target.querySelector('.blog-content');
-                    if (content) {
-                        content.style.display = 'block';
-                    }
+            blogPosts.forEach((post) => {
+                if (selectedPostId === post.id || selectedPostId === null) {
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('blog-post');
+                    postElement.innerHTML = `
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                    `;
+                    blogPostsContainer.appendChild(postElement);
                 }
+            });
+
+            if (selectedPostId !== null && !blogPosts.some(post => post.id === selectedPostId)) {
+                blogPostsContainer.innerHTML = '<p>Blog post not found.</p>';
             }
         }
 
-    
-        expandBlogContent();
+        function addBlogPost(title, content) {
+            const newId = blogPosts.length > 0 ? Math.max(...blogPosts.map(post => post.id)) + 1 : 1;
+            blogPosts.push({ id: newId, title, content });
+            renderBlogPosts();
+        }
 
-        
-        window.addEventListener('hashchange', expandBlogContent);
-
-       
-        document.querySelectorAll('.blog-title').forEach(title => {
-            title.addEventListener('click', () => {
-                const content = title.nextElementSibling;
-                content.style.display = content.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-
+        renderBlogPosts();
+        window.addEventListener('hashchange', renderBlogPosts);
     </script>
 </body>
 </html>
