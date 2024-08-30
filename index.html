@@ -3,196 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ash / home</title>
+    <title>Ash's Home Page - Netscape</title>
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
+            font-family: 'Arial', sans-serif;
+            background-color: #808080;
+            height: 100%;
+            overflow: hidden;
+        }
+        .browser-window {
+            width: 100%;
+            height: 100%;
+            background-color: #c0c0c0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+        }
+        .title-bar {
+            background-color: #000080;
+            color: white;
+            padding: 2px 5px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .window-controls {
+            display: flex;
+        }
+        .window-button {
+            width: 16px;
+            height: 14px;
+            background-color: #c0c0c0;
+            border: 2px outset #ffffff;
+            margin-left: 2px;
+        }
+        .menu-bar, .toolbar {
+            background-color: #c0c0c0;
+            padding: 2px 5px;
+            border-bottom: 1px solid #808080;
+        }
+        .menu-bar span {
+            margin-right: 15px;
+        }
+        .toolbar-button {
+            display: inline-block;
+            padding: 2px 5px;
+            margin-right: 5px;
+            background-color: #c0c0c0;
+            border: 2px outset #ffffff;
+            font-size: 12px;
+        }
+        .address-bar {
+            background-color: #ffffff;
+            padding: 2px 5px;
+            border: 2px inset #808080;
+            margin: 2px 5px;
         }
         .content {
-            display: flex;
-            flex: 1;
+            flex-grow: 1;
+            background-color: #ffffff;
+            margin: 0 2px 2px;
+            border: 2px inset #808080;
+            overflow: auto;
         }
-        .left-side {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
+        #clock {
+            font-family: 'Courier New', monospace;
+            background-color: #c0c0c0;
+            border: 2px inset #ffffff;
+            padding: 2px 5px;
         }
-        .right-side {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        #ascii-art {
-            font-family: monospace;
-            white-space: pre;
-            font-size: 6px;
-            line-height: 6px;
-            background: linear-gradient(-45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientMove 10s ease infinite;
-        }
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        a {
-            color: white;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        a::before {
-            content: attr(data-text);
-            position: absolute;
-            left: 0;
-            width: 0;
-            height: 100%;
-            color: transparent;
-            overflow: hidden;
-            white-space: nowrap;
-            animation: linkAnimation 3s infinite linear;
-            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-        @keyframes linkAnimation {
-            0% { width: 0; }
-            50% { width: 100%; }
-            100% { width: 0; }
-        }
-        .blog-section {
-            padding: 20px;
-            border-top: 1px solid #333;
-        }
-        .blog-post {
-            margin-bottom: 20px;
+        .website-content {
+            background-color: #87CEEB;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAkSURBVHjaYvz///9/BhTw+vVrBkZk8P//fwYmBjIAQIABANPuC1X//nq7AAAAAElFTkSuQmCC");
             padding: 10px;
-            border: 1px solid #333;
-            border-radius: 5px;
+            min-height: 100%;
         }
-        .blog-post h3 {
-            margin-top: 0;
+        .3d-line {
+            height: 2px;
+            background: linear-gradient(to right, #ffffff, #87CEEB);
+            margin: 10px 0;
+        }
+        .content-box {
+            border: 2px outset #ffffff;
+            background-color: #add8e6;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .sidebar {
+            background-color: #FFFF00;
+        }
+        .visitor-count {
+            background-color: #000000;
+            color: #00FF00;
+            display: inline-block;
+            padding: 2px 5px;
+        }
+        marquee {
+            background-color: #c0c0c0;
+            padding: 5px;
+        }
+        .status-bar {
+            background-color: #c0c0c0;
+            padding: 2px 5px;
+            border-top: 1px solid #808080;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
-    <div class="content">
-        <div class="left-side">
-            <h1>Abt.me</h1>
-            <ul>
-                <li>My name is Ash and I run <a href="https://github.com/idaeyus" data-text="Idaeyus">Idaeyus</a></li>
-                <li>I love writing code and post on <a href="https://x.com/opaeoh" data-text="@opaeoh">@opaeoh</a></li>
-            </ul>
-            <h2>Programming Journey</h2>
-            <ol>
-                <li>Started my journey by making simple maps for CounterStrike using the <a href="https://developer.valvesoftware.com/wiki/SDK_Installation" data-text="Source SDK">Source SDK</a></li>
-                <li>Then learnt javascript from <a href="https://www.khanacademy.org/computing/computer-programming/programming" data-text="Khan Academy">Khan Academy</a></li>
-                <li>Learnt java and made nothing out of it</li>
-                <li>Learnt python and still build apps using it</li>
-            </ol>
-            <h2>Currently Working On</h2>
-            <ol>
-                <li>A simple programming language</li>
-                <li>An AI transpiler</li>
-                <li>A chess server</li>
-                <li>AI component builder</li>
-                <li>Fine-tuning AI models</li>
-            </ol>
+    <div class="browser-window">
+        <div class="title-bar">
+            <span>Ash's Home Page - Netscape</span>
+            <div class="window-controls">
+                <div class="window-button"></div>
+                <div class="window-button"></div>
+                <div class="window-button"></div>
+            </div>
         </div>
-        <div class="right-side">
-            <div id="ascii-art"></div>
+        <div class="menu-bar">
+            <span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Bookmarks</span><span>Options</span><span>Directory</span><span>Window</span><span>Help</span>
         </div>
-    </div>
-    <div class="blog-section">
-        <h2>Blog</h2>
-        <div id="blog-posts"></div>
+        <div class="toolbar">
+            <span class="toolbar-button">Back</span>
+            <span class="toolbar-button">Forward</span>
+            <span class="toolbar-button">Home</span>
+            <span class="toolbar-button">Reload</span>
+            <span class="toolbar-button">Images</span>
+            <span class="toolbar-button">Open</span>
+            <span class="toolbar-button">Print</span>
+            <span class="toolbar-button">Find</span>
+            <span class="toolbar-button">Stop</span>
+        </div>
+        <div class="address-bar">
+            https://www.opaeoh.github.io/
+        </div>
+        <div class="content">
+            <div class="website-content">
+                <div class="content-box" id="home">
+                    <h1><font color="#FF0000">Ash's Home Page</font></h1>
+                    <div class="3d-line"></div>
+                    <h2><font color="#000080">Welcome to Ash's Personal Website</font></h2>
+                </div>
+                
+                <table width="100%" cellspacing="0" cellpadding="5">
+                    <tr>
+                        <td width="20%" valign="top" class="sidebar">
+                            <div class="content-box">
+                                <font size="+1"><b>Navigation</b></font><br>
+                                <a href="#home">Home</a><br>
+                                <a href="#about">About Me</a><br>
+                                <a href="#projects">Projects</a><br>
+                                <a href="#journey">Programming Journey</a><br>
+                                <a href="https://blog.example.com" target="_blank">Blog</a><br>
+                            </div>
+                        </td>
+                        <td width="80%" valign="top">
+                            <div class="content-box">
+                                <img src="https://pbs.twimg.com/media/GWMlQ1NX0AAdUEk?format=png&name=4096x4096" alt="Ash" align="left" hspace="10" width="160" height="160">
+                                <p>You are visitor number <span class="visitor-count" id="visitorCount">000001</span></p>
+                                <p><i>since August 30, 2024</i></p>
+                                <h2 id="about">About Me</h2>
+                                <ul>
+                                    <li>My name is Ash and I run <a href="https://github.com/idaeyus">Idaeyus</a></li>
+                                    <li>I love writing code and post on <a href="https://x.com/opaeoh">@opaeoh</a></li>
+                                </ul>
+                                <h2 id="journey">Programming Journey</h2>
+                                <ol>
+                                    <li>Started my journey by making simple maps for CounterStrike using the <a href="https://developer.valvesoftware.com/wiki/SDK_Installation">Source SDK</a></li>
+                                    <li>Then learnt javascript from <a href="https://www.khanacademy.org/computing/computer-programming/programming">Khan Academy</a></li>
+                                    <li>Learnt java and made nothing out of it</li>
+                                    <li>Learnt python and still build apps using it</li>
+                                </ol>
+                                <h2 id="projects">Currently Working On</h2>
+                                <ol>
+                                    <li>A simple programming language</li>
+                                    <li>An AI transpiler</li>
+                                    <li>A chess server</li>
+                                    <li>AI component builder</li>
+                                    <li>Fine-tuning AI models</li>
+                                </ol>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+                <div class="3d-line"></div>
+                <marquee>Thanks for visiting! Check out my blog for the latest updates!</marquee>
+                <div class="3d-line"></div>
+                
+                <div align="center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Dag_Hammarskj%C3%B6ld_-_ASCII_-_teleprinter_art_-1962.jpg/220px-Dag_Hammarskj%C3%B6ld_-_ASCII_-_teleprinter_art_-1962.jpg" alt="Under Construction">
+                </div>
+            </div>
+        </div>
+        <div class="status-bar">
+            <span>Welcome to my home page, where I share my passion for programming and technology!</span>
+            <span id="clock"></span>
+        </div>
     </div>
 
     <script>
-        const asciiArt = `
-                                   ▄▄
-                                ▄█████▄
-                               █████████▄
-                             ▄██████████████▄
-                           ▄█████████████████▄
-                         ▄███████████████████▀
-                        ████████████████████▀
-                       ████████████████████
-                      █████████████████████▄
-                     █████████████████████████▄▄
-                    ██████████████████████████████▄
-                  ██████████████████████████████████▄
-                ▄█████████████████████████████████████▄
-              ▄█████████████████████████████████████████▄
-             ███████████████████████████████████████████████▄
-           ▄████████████████████████████████████████████████████▄
-         ▄████████████████████████████████████████████████████████▄
-        ██████████████████████████████████████████████████████████████
-      ▄████████████████████████████████████████████████████████████████▄
-    ▄██████████████████████████████████████████████████████████████████████▄
-  ▄█████████████████████████████████████████████████████████████████████████████▄
-`;
-
-        document.getElementById('ascii-art').textContent = asciiArt;
-
-        const blogPosts = [
-            {
-                id: 1,
-                title: "My First Blog Post",
-                content: "Welcome to my blog! This is where I'll share my thoughts on programming, AI, and tech."
-            },
-            {
-                id: 2,
-                title: "Learning AI",
-                content: "Today, I started diving deeper into machine learning algorithms. It's fascinating how they can be applied to solve real-world problems."
-            }
-        ];
-
-        function renderBlogPosts() {
-            const blogPostsContainer = document.getElementById('blog-posts');
-            blogPostsContainer.innerHTML = '';
-
-            const hash = window.location.hash.substring(1);
-            const selectedPostId = hash.startsWith('blog-') ? parseInt(hash.split('-')[1]) : null;
-
-            blogPosts.forEach((post) => {
-                if (selectedPostId === post.id || selectedPostId === null) {
-                    const postElement = document.createElement('div');
-                    postElement.classList.add('blog-post');
-                    postElement.innerHTML = `
-                        <h3>${post.title}</h3>
-                        <p>${post.content}</p>
-                    `;
-                    blogPostsContainer.appendChild(postElement);
-                }
-            });
-
-            if (selectedPostId !== null && !blogPosts.some(post => post.id === selectedPostId)) {
-                blogPostsContainer.innerHTML = '<p>Blog post not found.</p>';
-            }
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
         }
 
-        function addBlogPost(title, content) {
-            const newId = blogPosts.length > 0 ? Math.max(...blogPosts.map(post => post.id)) + 1 : 1;
-            blogPosts.push({ id: newId, title, content });
-            renderBlogPosts();
+        function incrementVisitorCount() {
+            const visitorCountElement = document.getElementById('visitorCount');
+            let count = parseInt(visitorCountElement.textContent);
+            count++;
+            visitorCountElement.textContent = count.toString().padStart(6, '0');
         }
 
-        renderBlogPosts();
-        window.addEventListener('hashchange', renderBlogPosts);
+        setInterval(updateClock, 1000);
+        updateClock();
+        incrementVisitorCount();
     </script>
 </body>
 </html>
